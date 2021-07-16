@@ -98,8 +98,7 @@ function isAccessibleByTransportMode(arrTransportMode, transportMode) {
       e.g: "Tower Bridge"
 */
 function getLocationName(arrTransportMode) {
-  const locationsArray = arrTransportMode.slice(0, 1);
-  return locationsArray.toString();
+  return arrTransportMode[0];
 }
 
 /*
@@ -131,15 +130,12 @@ function getLocationName(arrTransportMode) {
 */
 
 function journeyPlanner(locations, transportMode) {
-  // Implement the function body
-  let whereCanWeGoInLondon = [];
-  let accessibleLocations = locations.map((element) => {
-    if (element.includes(transportMode)) {
-      return whereCanWeGoInLondon.push(getLocationName(element));
-    }
-  });
-
-  return whereCanWeGoInLondon;
+  return locations
+    .filter((locationsAndTransportMode) => {
+      const allTransportModes = getTransportModes(locationsAndTransportMode);
+      return isAccessibleByTransportMode(allTransportModes, transportMode);
+    })
+    .map((allPossibleLocations) => getLocationName(allPossibleLocations));
 }
 
 /* ======= TESTS - DO NOT MODIFY ===== */
